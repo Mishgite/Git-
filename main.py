@@ -8,10 +8,10 @@ import random
 class CircleButton(QMainWindow):
     def __init__(self):
         super().__init__()
-        self.setGeometry(0, 0, 1000, 1000)
+        self.setGeometry(500, 500, 500, 500)
 
         self.button = QPushButton("Рисовать", self)
-        self.button.setGeometry(10, 50, 80, 40)
+        self.button.setGeometry(0, 0, 50, 20)
         self.button.clicked.connect(self.draw_circle)
 
     def draw_circle(self):
@@ -25,9 +25,9 @@ class CircleButton(QMainWindow):
 
     def draw(self, qp):
         size = random.randint(1, 500)
-        color = QColor(Qt.yellow)
+        color = QColor(random.randint(0, 255), random.randint(0, 255), random.randint(0, 255))
         qp.setBrush(color)
-        qp.drawEllipse(150, 150, size, size)
+        qp.drawEllipse(random.randint(1, 500), random.randint(1, 500), size, size)
 
 
 if __name__ == '__main__':
