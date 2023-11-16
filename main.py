@@ -1,38 +1,37 @@
-from PyQt5.QtWidgets import QApplication, QWidget, QVBoxLayout, QPushButton
+from PyQt5.QtWidgets import QApplication, QMainWindow, QPushButton
 from PyQt5.QtGui import QPainter, QColor
-from PyQt5.QtCore import Qt, QRectF
-from random import randint
+from PyQt5.QtCore import Qt
 import sys
+import random
 
 
-class Circle(QWidget):
+class CircleButton(QMainWindow):
     def __init__(self):
         super().__init__()
         self.setGeometry(0, 0, 1000, 1000)
-        self.setWindowTitle('Жёлтый круг')
-        self.circles = []
 
-        self.draw = QPushButton(self)
-        self.draw.move(300, 10)
-        self.draw.setText("Рисовать")
-        self.draw.clicked.connect(self.generate_circle)
+        self.button = QPushButton("Рисовать", self)
+        self.button.setGeometry(10, 50, 80, 40)
+        self.button.clicked.connect(self.draw_circle)
 
-    def generate_circle(self):
-        self.circles.append((randint(1, 200), randint(0, 1000), randint(0, 1000)))
+    def draw_circle(self):
         self.update()
 
     def paintEvent(self, event):
-        painter = QPainter(self)
-        painter.setRenderHint(QPainter.Antialiasing)
+        qp = QPainter()
+        qp.begin(self)
+        self.draw(qp)
+        qp.end()
 
-        for diameter, x, y in self.circles:
-            painter.setPen(Qt.NoPen)
-            painter.setBrush(Qt.yellow)
-            painter.drawEllipse(QRectF(x - diameter / 2, y - diameter / 2, diameter, diameter))
+    def draw(self, qp):
+        size = random.randint(1, 500)
+        color = QColor(Qt.yellow)
+        qp.setBrush(color)
+        qp.drawEllipse(150, 150, size, size)
 
 
 if __name__ == '__main__':
     app = QApplication(sys.argv)
-    window = Circle()
+    window = CircleButton()
     window.show()
     sys.exit(app.exec_())
