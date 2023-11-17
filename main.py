@@ -19,22 +19,24 @@ class CoffeeInfoApp(QWidget):
         self.get_coffee_info()
 
     def get_coffee_info(self):
-        self.cursor.execute('SELECT * FROM coffe')
+        self.cursor.execute('''SELECT coffe.id, coffe.variety, roasting.roasting, view.view, 
+        coffe.taste_description, coffe.price, coffe.packing_volume 
+        FROM coffe INNER JOIN view, roasting ON view.view = view.view ''')
         coffee_data = self.cursor.fetchall()
 
         self.table_widget.setRowCount(len(coffee_data))
         self.table_widget.setColumnCount(7)
 
         self.table_widget.setHorizontalHeaderLabels(['ID', 'Название сорта', 'Степень обжарки', 'Молотый/в зернах',
-                                                      'Описание вкуса', 'Цена', 'Объем упаковки'])
+                                                    'Описание вкуса', 'Цена', 'Объем упаковки'])
 
         row = 0
         for data in coffee_data:
             self.table_widget.setItem(row, 0, QTableWidgetItem(str(data[0])))
-            self.table_widget.setItem(row, 1, QTableWidgetItem(data[1]))
-            self.table_widget.setItem(row, 2, QTableWidgetItem(data[2]))
-            self.table_widget.setItem(row, 3, QTableWidgetItem(data[3]))
-            self.table_widget.setItem(row, 4, QTableWidgetItem(data[4]))
+            self.table_widget.setItem(row, 1, QTableWidgetItem(str(data[1])))
+            self.table_widget.setItem(row, 2, QTableWidgetItem(str(data[2])))
+            self.table_widget.setItem(row, 3, QTableWidgetItem(str(data[3])))
+            self.table_widget.setItem(row, 4, QTableWidgetItem(str(data[4])))
             self.table_widget.setItem(row, 5, QTableWidgetItem(str(data[5])))
             self.table_widget.setItem(row, 6, QTableWidgetItem(str(data[6])))
 
