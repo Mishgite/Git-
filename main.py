@@ -29,7 +29,6 @@ class CoffeeInfoApp(QWidget):
         data1 = {}
         for i, j in data0:
             data1[str(i)] = j
-        print(data1)
 
         self.table_widget.setRowCount(len(coffee_data))
         self.table_widget.setColumnCount(7)
