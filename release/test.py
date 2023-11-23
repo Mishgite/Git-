@@ -54,6 +54,7 @@ class MyWidget(QWidget):
             row += 1
 
     def adding(self):
+
         self.add_form = AddWidget(self)
         self.add_form.show()
 
